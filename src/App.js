@@ -6,7 +6,11 @@ function App() {
   return (
     <div className="App">
       <Expandable>
-       
+        <Expandable.Header style={{ color: 'red', border: '1px solid teal' }}>
+          Reintroducing React
+       </Expandable.Header>
+        <Expandable.Icon />
+        <Expandable.Body>
           <img
             src='https://i.imgur.com/qpj4Y7N.png'
             style={{ width: '250px' }}
@@ -22,7 +26,8 @@ function App() {
               Go get it now.
             </a>
           </p>
-       
+        </Expandable.Body>
+
       </Expandable>
     </div>
   );
