@@ -40,14 +40,23 @@ function App() {
 }
 
 function WithoutComponents() {
-  const {expanded, togglerProps} = useExpanded();
+  const {expanded, getTogglerProps} = useExpanded();
 
   useEffectAfterMount(() => {
     console.log('Yay! button war clicked!');
   }, [expanded]);
 
+  const customClickHandler = () => {
+    console.log('custom click handler!!!');
+  }
+
   return <div style={ {marginTop: '3rem'} }>
-    <button { ...togglerProps }>Click to review awesomeness...</button>
+    <button id="my-btn-id" aria-label="custom-toggler" { ...getTogglerProps({
+      id: 'my-btn-id',
+      'aria-label': 'custom toggler',
+      onClick: customClickHandler
+    }) }>Click to review awesomeness...
+    </button>
     { expanded ? <p>{ 'XY'.repeat(10) }</p> : null }
   </div>
 }
