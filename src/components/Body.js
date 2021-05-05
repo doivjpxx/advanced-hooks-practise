@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import React, { useContext } from "react"
 import { ExpandableContext } from "./Expandable"
 
 const Body = ({ children, className = '', ...otherProps }) => {

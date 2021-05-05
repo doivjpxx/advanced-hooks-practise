@@ -1,34 +1,41 @@
-import logo from './logo.svg';
 import './App.css';
+import React, {useState} from 'react';
 import Expandable from './components/Expandable';
 
+const information = [
+  {
+    header: 'Why everyone should live forrever',
+    note: 'This is highly sensitive information on how to prevent death!!!!'
+  },
+  {
+    header: 'The internet disappears',
+    note:
+      'I just uncovered the biggest threat to the internet. The internet disappears in 301 seconds. Save yourself'
+  },
+  {
+    header: 'The truth about Elon musk and Mars!',
+    note: 'Nobody tells you this. Elon musk ... News coming soon.'
+  }
+];
+
 function App() {
+  const [activeIndex, setActiveIndex] = useState(null);
+
+  const onExpand = event => setActiveIndex(event.target.dataset.index);
+
   return (
     <div className="App">
-      <Expandable>
-        <Expandable.Header style={{ color: 'red', border: '1px solid teal' }}>
-          Reintroducing React
-       </Expandable.Header>
-        <Expandable.Icon />
-        <Expandable.Body>
-          <img
-            src='https://i.imgur.com/qpj4Y7N.png'
-            style={{ width: '250px' }}
-            alt='reintroducing react book cover'
-          />
-          <p style={{ opacity: 0.7 }}>
-            This book is so f*cking amazing! <br />
-            <a
-              href='https://leanpub.com/reintroducing-react'
-              target='_blank'
-              rel='noopener noreferrer'
-            >
-              Go get it now.
-            </a>
-          </p>
-        </Expandable.Body>
-
-      </Expandable>
+      {information.map(({header, note}, index) => (
+        <Expandable shouldExpand={index === +activeIndex} onExpand={onExpand} key={index}>
+          <Expandable.Header data-index={index} style={{color: 'red', border: '1px solid teal'}}>
+            {header}
+            <Expandable.Icon/>
+          </Expandable.Header>
+          <Expandable.Body>
+            {note}
+          </Expandable.Body>
+        </Expandable>
+      ))}
     </div>
   );
 }
