@@ -1,6 +1,11 @@
 import './App.css';
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import Expandable from './components/Expandable';
+import useExpanded from "./hooks/useExpanded";
+import useEffectAfterMount from "./hooks/useEffectAfterMounted";
+import Header from "./components/Header";
+import Icon from "./components/Icon";
+import Body from "./components/Body";
 
 const information = [
   {
@@ -21,22 +26,31 @@ const information = [
 function App() {
   const [activeIndex, setActiveIndex] = useState(null);
 
-  const onExpand = event => setActiveIndex(event.target.dataset.index);
+  const {expanded, toggle} = useExpanded();
+
+  useEffectAfterMount(() => {
+    console.log('YAY! button was clicked!');
+  }, [expanded]);
 
   return (
-    <div className="App">
-      {information.map(({header, note}, index) => (
-        <Expandable shouldExpand={index === +activeIndex} onExpand={onExpand} key={index}>
-          <Expandable.Header data-index={index} style={{color: 'red', border: '1px solid teal'}}>
-            {header}
-            <Expandable.Icon/>
-          </Expandable.Header>
-          <Expandable.Body>
-            {note}
-          </Expandable.Body>
-        </Expandable>
-      ))}
-    </div>
+  <div className="Expandable">
+    <Header toggle={toggle}>Awesome hooks</Header>
+    <Icon expanded={expanded} />
+    <Body expanded={expanded}>React hooks is awesome!</Body>
+  </div>
+    // <div className="App">
+    //   {information.map(({header, note}, index) => (
+    //     <Expandable shouldExpand={index === +activeIndex} onExpand={onExpand} key={index}>
+    //       <Expandable.Header data-index={index} style={{color: 'red', border: '1px solid teal'}}>
+    //         {header}
+    //         <Expandable.Icon/>
+    //       </Expandable.Header>
+    //       <Expandable.Body>
+    //         {note}
+    //       </Expandable.Body>
+    //     </Expandable>
+    //   ))}
+    // </div>
   );
 }
 
