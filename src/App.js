@@ -33,25 +33,35 @@ function App() {
   }, [expanded]);
 
   return (
-  <div className="Expandable">
-    <Header toggle={toggle}>Awesome hooks</Header>
-    <Icon expanded={expanded} />
-    <Body expanded={expanded}>React hooks is awesome!</Body>
-  </div>
-    // <div className="App">
-    //   {information.map(({header, note}, index) => (
-    //     <Expandable shouldExpand={index === +activeIndex} onExpand={onExpand} key={index}>
-    //       <Expandable.Header data-index={index} style={{color: 'red', border: '1px solid teal'}}>
-    //         {header}
-    //         <Expandable.Icon/>
-    //       </Expandable.Header>
-    //       <Expandable.Body>
-    //         {note}
-    //       </Expandable.Body>
-    //     </Expandable>
-    //   ))}
-    // </div>
+    <div className="App">
+      <WithoutComponents/>
+    </div>
   );
+}
+
+function WithoutComponents() {
+  const {expanded, togglerProps} = useExpanded();
+
+  useEffectAfterMount(() => {
+    console.log('Yay! button war clicked!');
+  }, [expanded]);
+
+  return <div style={ {marginTop: '3rem'} }>
+    <button { ...togglerProps }>Click to review awesomeness...</button>
+    { expanded ? <p>{ 'XY'.repeat(10) }</p> : null }
+  </div>
+}
+
+function WithComponent() {
+  const {expanded, toggle} = useExpanded();
+
+  return (
+    <div className="Expandable">
+      <Header toggle={ toggle }>Awesome Hooks</Header>
+      <Icon expanded={ expanded }/>
+      <Body expanded={ expanded }>React hooks is awesome!</Body>
+    </div>
+  )
 }
 
 export default App;
