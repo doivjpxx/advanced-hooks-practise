@@ -26,11 +26,7 @@ const information = [
 function App() {
   const [activeIndex, setActiveIndex] = useState(null);
 
-  const {expanded, toggle} = useExpanded();
-
-  useEffectAfterMount(() => {
-    console.log('YAY! button was clicked!');
-  }, [expanded]);
+  const { expanded, toggle, reset, resetDep } = useExpanded(false);
 
   return (
     <div className="App">
@@ -40,17 +36,21 @@ function App() {
 }
 
 function WithoutComponents() {
-  const {expanded, getTogglerProps} = useExpanded();
+  const { reset, resetDep, expanded, getTogglerProps } = useExpanded(true);
 
   useEffectAfterMount(() => {
     console.log('Yay! button war clicked!');
   }, [expanded]);
 
+  useEffectAfterMount(() => {
+    console.log('reset was invoked!');
+  }, [resetDep]);
+
   const customClickHandler = () => {
     console.log('custom click handler!!!');
   }
 
-  return <div style={ {marginTop: '3rem'} }>
+  return <div style={ { marginTop: '3rem' } }>
     <button id="my-btn-id" aria-label="custom-toggler" { ...getTogglerProps({
       id: 'my-btn-id',
       'aria-label': 'custom toggler',
@@ -62,7 +62,7 @@ function WithoutComponents() {
 }
 
 function WithComponent() {
-  const {expanded, toggle} = useExpanded();
+  const { expanded, toggle } = useExpanded();
 
   return (
     <div className="Expandable">
